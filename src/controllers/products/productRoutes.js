@@ -8,13 +8,13 @@ const {
 
 const productRouter = express.Router()
 
-productRouter.get("/", (request, response) => {
-    const products = getProducts()
+productRouter.get("/", async (request, response) => {
+    const products = await getProducts()
     response.json(products)
 })
 
-productRouter.get("/:productId", (request, response) => {
-    const product = getProductById(request.params.productId)
+productRouter.get("/:productId", async (request, response) => {
+    const product = await getProductById(request.params.productId)
     if (!product) {
         response.status(404).json({
             data: "Product doesn't exist",
@@ -23,8 +23,8 @@ productRouter.get("/:productId", (request, response) => {
     response.json(product)
 })
 
-productRouter.post("/", (request, response) => {
-    const product = createProduct({
+productRouter.post("/", async (request, response) => {
+    const product = await createProduct({
         title: request.body.title,
         description: request.body.description,
         price: request.body.price,
