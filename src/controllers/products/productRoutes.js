@@ -4,6 +4,7 @@ const {
     getProducts,
     getProductById,
     createProduct,
+    deleteProduct,
 } = require("./productControllers")
 
 const productRouter = express.Router()
@@ -30,6 +31,11 @@ productRouter.post("/", async (request, response) => {
         price: request.body.price,
         stock: request.body.stock,
     })
+    response.json(product)
+})
+
+productRouter.delete("/:productId", async (request, response) => {
+    const product = await deleteProduct(request.params.productId)
     response.json(product)
 })
 
