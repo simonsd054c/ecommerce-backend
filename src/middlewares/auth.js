@@ -13,7 +13,7 @@ function auth(request, response, next) {
         // successfully verifies, gives payload. not verified, throws error
         const payload = jwt.verify(token, "secret")
         //put the payload(id) in the request for other functions to use
-        request.userId = payload.id
+        request.payload = payload
         next()
     } catch(err) {
         console.log(err)
