@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken")
 
 const Admin = require("../../models/admin")
 const User = require("../../models/user")
+const { createCart } = require("../carts/cartControllers")
 
 async function registerUser(user) {
     const existingUser = await User.findOne({ username: user.username })
@@ -19,6 +20,10 @@ async function registerUser(user) {
         id: userCreated._id,
     }
     const token = jwt.sign(payload, "secret")
+    await createCart({
+        user_id: userCreated._id,
+        products: [],
+    })
     return token
 }
 

@@ -1,4 +1,5 @@
 const express = require("express")
+const auth = require("../../middlewares/auth")
 
 const {
     getCarts,
@@ -14,6 +15,18 @@ cartRouter.get("/", async (request, response) => {
     response.json(carts)
 })
 
+// /carts/cart?getProductInfo=false
+cartRouter.get("/cart", auth, async (request, response) => {
+    let cart
+    if (request.query.getProductInfo) {
+        cart = await getCartByUserIdWithProductInfo(request.payload.id)
+    } else {
+        cart = await getCartByUserId(request.payload.id)
+    }
+    response.json(cart)
+ })
+
+ //carts/id
 cartRouter.get("/:cartId", async (request, response) => {
     const cart = await getCartById(request.params.cartId)
     if (!cart) {
