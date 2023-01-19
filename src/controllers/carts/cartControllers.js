@@ -35,6 +35,12 @@ async function getCarts() {
     return carts
 }
 
+async function createCart(cart) {
+    //insert the cart into the database and return that created cart
+    const newCart = await Cart.create(cart)
+    return newCart
+}
+
 async function getCartById(cartId) {
     //get the cart from the database with id 'cartId'
     const cart = await Cart.findById(cartId)
@@ -47,6 +53,21 @@ async function getCartByUserId(userId) {
     return cartByUserId
 }
 
+// [
+//     {
+//         product_id: id,
+//         quantity: 5,
+//     },
+//     {
+//         product_id: id,
+//         quantity: 5,
+//         product: {
+//             title: title,
+//             description: description, 
+//         }
+//     }
+// ]
+
 async function getCartByUserIdWithProductInfo(userId) {
     const cartByUserIdWithProductInfo = await Cart.findOne({
         user_id: userId,
@@ -56,6 +77,7 @@ async function getCartByUserIdWithProductInfo(userId) {
 
 module.exports = {
     getCarts,
+    createCart,
     getCartById,
     getCartByUserId,
     getCartByUserIdWithProductInfo,
