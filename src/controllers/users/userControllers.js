@@ -19,7 +19,7 @@ async function registerUser(user) {
     const payload = {
         id: userCreated._id,
     }
-    const token = jwt.sign(payload, "secret")
+    const token = jwt.sign(payload, process.env.JWT_SECRET)
     await createCart({
         user_id: userCreated._id,
         products: [],
@@ -43,7 +43,7 @@ async function loginUser(user) {
         id: existingUser._id,
         // is_admin: undefined which translates to false
     }
-    const token = jwt.sign(payload, "secret")
+    const token = jwt.sign(payload, process.env.JWT_SECRET)
     //return the token
     return token
 }
@@ -64,7 +64,7 @@ async function loginAdmin(user) {
         id: existingUser._id,
         is_admin: true,
     }
-    const token = jwt.sign(payload, "secret")
+    const token = jwt.sign(payload, process.env.JWT_SECRET)
     //return the token
     return token
 }

@@ -1,11 +1,15 @@
 const express = require("express")
 const cors = require("cors")
+const helmet = require("helmet")
+require("dotenv").config()
 
 const productRouter = require("./controllers/products/productRoutes")
 const cartRouter = require("./controllers/carts/cartRoutes")
 const userRouter = require("./controllers/users/userRoutes")
 
 const app = express()
+
+app.use(helmet())
 
 app.use(express.json());
 
@@ -16,7 +20,7 @@ const corsOption = {
 
 app.use(cors(corsOption))
 
-const PORT = 5000
+const PORT = process.env.PORT || 5000
 
 app.get("/", (request, response) => {
     response.json({
